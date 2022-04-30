@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clidio Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4b5d940234.js" crossorigin="anonymous"></script>
+</head>
+<style>
+  body{
+    background: #e5e8e8;
+    font-family: 'Open Sans', sans-serif;
+}
+.label-heading{
+    font-size: 16px;
+    font-weight: 600;
+}
+.label-heading a{
+    color: #9ca3a3;
+}
+
+.add-button{
+    font-size: 20px;
+}
+.frequency-cap{
+    font-size: 12px;
+    color: #737777;
+    font-weight: 600;
+}
+.symbol-none{
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+}
+h5{
+    font-weight: 600;
+}
+</style>
+<body>
+{% include "core/message.html" %}
+  <div class="container">
+    <h3 class=" mt-2 text-center">{% if update %} Update {% else %}Create{% endif %} Campaign!</h3>
+    <a href="{% url 'campaigns-list' %}" class="btn btn-info btn-sm float-right">Campaigns</a>
+    <form method="POST">
+      {% csrf_token%}
+      <div class="row mt-5 mb-2 border py-3 card">
+        <div class="col-sm-12">
+          <label for="campaignName" class="text-secondary"><small>Campaign Name</small></label>
+          <input type="text" class="form-control" name="campaign_name" placeholder="My best campaign yet!" id="campaignName" value="{{campaign.campaign_name}}" required>
+          <hr>
+        </div>
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="far fa-id-card mr-1"></i>
+              <label for="customID">Custom ID</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" id="customID">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="ml-n2">General Settings</h5>
+      <div class="row border mb-2 py-3 card">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-6 label-heading">
+              <i class="far fa-folder mr-2"></i>
+              <label>Campaign Group</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-row">
+                <div class="col-sm-11">
+                  <select name='campaign_group' class="custom-select">
+                    {% if update %}<option value="{{campaign.campaign_group}}" selected>{{campaign.campaign_group}}</option>{% endif %}
+                    <option value="Campaign Group One" {% if not update %}selected{% endif %}>Campaign Group One</option>
+                    <option value="Campaign Group Two">Campaign Group Two</option>
+                    <option value="Campaign Group Three">Campaign Group Three</option>
+                  </select>
+                </div>
+                <div class="col-sm-1 pl-3 pt-1 pb-2">
+                  <a href="#." class="add-button"><i class="fas fa-plus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="fas fa-layer-group mr-2"></i>
+              <label>Campaign Type</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <select name='campaign_type' class="custom-select">
+                  {% if update %}<option value="{{campaign.campaign_type}}" selected>{{campaign.campaign_type}}</option>{% endif %}
+                  <option value="Campaign Type One" {% if not update %}selected{% endif %}>Campaign Type One</option>
+                  <option value="Campaign Type Two">Campaign Type Two</option>
+                  <option value="Campaign Type Three">Campaign Type Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="far fa-calendar-alt mr-2"></i>
+              <label for="startDate">Start Date</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-3">
+              <input name="start_date" type="date" class="form-control" id="startDate" value="{{campaign.start_date | date:'c'}}" required>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="far fa-calendar-alt mr-2"></i>
+              <label for="endDate">End Date</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-3">
+              <input name="end_date" type="date" class="form-control" id="endDate" value="{{campaign.end_date | date:'c'}}" required>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-8 label-heading">
+              <i class="fas fa-poll mr-2"></i>
+              <label>Frequency Capping</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-row">
+                <div class="col-sm-4 p-0">
+                  <input type="text" class="form-control p-0">
+                </div>
+                <div class="col-sm-3 text-center p-0">
+                  <label class="frequency-cap pt-2">imps/per</label>
+                </div>
+                <div class="col-sm-3 p-0">
+                  <div class="input-group">
+                    <select class="custom-select">
+                      <option selected></option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-2 text-center p-0">
+                  <label class="frequency-cap pt-2">hours</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="fas fa-shield-alt mr-2"></i>
+              <label>OBA Compliance</label>
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <select class="custom-select">
+                  <option selected>Select Compliance</option>
+                  <option value="1">Compliance One</option>
+                  <option value="2">Compliance Two</option>
+                  <option value="3">Compliance Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="fas fa-tag mr-2"></i>
+              <label>Retail Markups</label>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="far fa-comment-alt mr-2"></i>
+              <label>Comments</label>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="ml-n2">Budget</h5>
+      <div class="row mb-2 border py-3 card">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-8 label-heading">
+              <i class="fas fa-gavel mr-2"></i>
+              <label>Max Bid</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-row">
+                <div class="col-sm-5">
+                  <input type="text" placeholder="$" class="form-control">
+                </div>
+                <div class="col-sm-7">
+                  <div class="input-group">
+                    <select class="custom-select">
+                      <option selected>CPM</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="fas fa-dollar-sign mr-2"></i>
+              <label>Budget Type</label>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <select class="custom-select">
+                  <option selected>Legacy</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="fas fa-calculator mr-2"></i>
+              <label>Budget Spend</label>
+              <a href="#." class="text-decoration-none ml-1 text-primary"><small>LEGACY</small></a>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="far fa-eye mr-2"></i>
+              <label>Impression Capping</label>
+              <a href="#." class="text-decoration-none ml-1 text-primary"><small>LEGACY</small></a>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="fas fa-torii-gate mr-2"></i>
+              <label>Goal</label>
+              <a href="#." data-toggle="tooltip" title=""
+                data-original-title="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, nobis."
+                data-placement="right"><i class="fas fa-info-circle ml-1"></i></a>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <select class="custom-select">
+                  <option selected>None</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="d-inline-block ml-n2">Targeting</h5>
+      <a href="#." class="add-button float-right"><i class="fas fa-plus-circle"></i></a>
+      <div class="row mb-2 border py-3 card">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="fas fa-map-marker-alt mr-2"></i>
+              <label>Location Type</label>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <select class="custom-select">
+                  <option selected>Select Location Type</option>
+                  <option value="1">Type One</option>
+                  <option value="2">Type Two</option>
+                  <option value="3">Type Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="ml-n2">Conversions</h5>
+      <div class="row mb-2 border py-3 card">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="fas fa-torii-gate mr-2"></i>
+              <label>Geo-Conversions</label>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row">
+            <div class="col-sm-7 label-heading">
+              <i class="fas fa-torii-gate mr-2"></i>
+              <label>Site Conversions</label>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none symbol-none">None<i class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5 class="d-inline-block ml-n2">Inventory</h5>
+      <a href="#." class="add-button float-right"><i class="fas fa-plus-circle"></i></a>
+      <div class="row mb-2 border py-3 card">
+        <div class="col-sm-12 text-muted">
+          <i><small>Add Inventory sections above</small> </i>
+        </div>
+      </div>
+      <h5 class="ml-n2">Ads</h5>
+      <div class="row mb-2 border py-3 card">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-sm-9 label-heading">
+              <i class="fas fa-photo-video mr-2"></i>
+              <label>Media Type</label>
+            </div>
+            <div class="col-sm-3">
+              <div class="input-group">
+                <select class="custom-select">
+                  <option selected>Select Media Type</option>
+                  <option value="1">Type One</option>
+                  <option value="2">Type Two</option>
+                  <option value="3">Type Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2">
+          <div class="row text-muted">
+            <div class="col-sm-7 label-heading">
+              <i class="far fa-image mr-2"></i>
+              <label>Ads</label>
+            </div>
+            <div class="col-sm-5 text-right">
+              <a href="#." class="text-decoration-none text-muted symbol-none">None<i
+                  class="fas fa-chevron-right ml-3"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+              <div class="mt-2 mb-4 float-right">
+                {% if update %}
+                  <input name="updating" type="submit" class="btn btn-primary" value="Update Campaign">
+                {% else %}
+                  <button type="submit" class="btn btn-dark">Create Campaign</button>
+                {% endif %}
+
+        </div>
+
+    </form>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+</body>
+</html>
