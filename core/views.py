@@ -95,7 +95,8 @@ def delete_campaign(request, campaign_id: str):
     :param campaign_id: id of deleting campaign
     :return: render
     """
-    campaign: Campaigns = get_object_or_404(Campaigns, id=campaign_id).delete()
+    campaign: Campaigns = get_object_or_404(Campaigns, id=campaign_id)
+    campaign.delete()
     messages.warning(request, f"Campaign '{campaign.campaign_name}'"
                               f" is successfully deleted...")
     return redirect('campaigns-list')
