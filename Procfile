@@ -1,1 +1,4 @@
-web: gunicorn CAMPAIGNS.wsgi:application --timeout 120
+web: python clidio_dummy/manage.py runserver 0.0.0.0:8000
+
+
+
