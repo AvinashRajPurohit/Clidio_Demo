@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", 'django-insecure-chm2=7o$x7s8l7846w-8ndipj_hn^vwb)&ruusm4dw=1e+93k=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", 'clidiodemo.herokuapp.com']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
